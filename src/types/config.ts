@@ -85,6 +85,8 @@ export type SiteConfig = {
 	topAppBar: {
 		/** 桌面端标题与导航内容组的对齐方式。 */
 		contentAlign: TopAppBarContentAlign;
+		title?: string;
+		icon?: string;
 	};
 
 	/** 显示设置浮层各切换项的前端可见性控制 */

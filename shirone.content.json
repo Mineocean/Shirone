@@ -1,0 +1,15 @@
+{
+	"schemaVersion": 1,
+	"keep": [
+		"public/_headers",
+		"public/_redirects",
+		"src/data/anime.ts",
+		"src/data/compass.ts",
+		"src/data/devices.ts",
+		"src/data/games.ts",
+		"src/data/music.ts",
+		"src/data/projects.ts",
+		"src/data/skills.ts",
+		"src/data/timeline.ts"
+	]
+}

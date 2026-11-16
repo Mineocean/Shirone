@@ -423,6 +423,9 @@ function readPreviousConfigFiles() {
 function runSync() {
 	const resolved = resolveContentSource(ROOT);
 	if (resolved.mode === "local") {
+		if (process.env.CF_PAGES === "1") {
+			throw new Error("Set CONTENT_REPO_URL to the private blog content source before deploying to Cloudflare Pages.");
+		}
 		// 主题自带内容：保持静默，`pnpm dev` / `pnpm build` 的输出不受影响。
 		return null;
 	}

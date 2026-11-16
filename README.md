@@ -1,3 +1,43 @@
+# 宅日记
+
+[宅日记](https://blog.misakaoi.top/) 的主题仓基于 Shirone。文章、站点配置和媒体位于 [Shirone-Content](https://github.com/Mineocean/Shirone-Content)。
+
+## 本地构建
+
+安装 Node.js 26.13.1 和 pnpm 11.28.2，将两个仓库克隆为相邻目录。在主题仓中执行以下 PowerShell 命令。
+
+```powershell
+$env:CONTENT_DIR = '../Shirone-Content'
+pnpm.cmd install --frozen-lockfile
+pnpm.cmd content:validate
+pnpm.cmd build
+pnpm.cmd preview
+```
+
+番剧页读取内容仓的 Bangumi 快照。更新时先同步内容配置，再执行 `pnpm anime:sync --provider bangumi`。检查生成的 `src/data/anime-snapshots/bangumi.json` 后，将其复制回内容仓的 `data/anime-snapshots/` 并提交。
+
+## Cloudflare Pages
+
+在 Workers & Pages 创建 Pages 项目，通过 GitHub 连接 `Mineocean/Shirone`。使用 `main` 分支、仓库根目录、构建命令 `pnpm build` 和输出目录 `dist`。
+
+| 构建环境变量 | 值 |
+| --- | --- |
+| `NODE_VERSION` | `26.13.1` |
+| `PNPM_VERSION` | `11.28.2` |
+| `CONTENT_REPO_REF` | `main` |
+| `GIT_TERMINAL_PROMPT` | `0` |
+| `CONTENT_REPO_URL` | 加密变量，使用 `https://x-access-token:<TOKEN>@github.com/Mineocean/Shirone-Content.git` |
+
+令牌使用 GitHub fine-grained personal access token，仅允许读取 `Mineocean/Shirone-Content` 的 Contents。若启用分支预览，在 Pages 的 Production 和 Preview 环境分别设置变量。
+
+在 Pages 项目的 Settings 中为 `main` 创建 Deploy Hook。将地址保存为内容仓的 Actions Secret `CLOUDFLARE_PAGES_DEPLOY_HOOK`。随后可从内容仓的 Actions 页面手动运行 `Rebuild the blog`，在 Pages 中确认新的构建记录。
+
+先在 Pages 分配的 `pages.dev` 地址验收，再安排绑定正式域名。
+
+[Shirone 内容源文档](https://docs.shirone.mysqil.com/guide/content-separation/content-sources/) · [Cloudflare Pages Deploy Hooks](https://developers.cloudflare.com/pages/configuration/deploy-hooks/)
+
+---
+
 <div align="center">
 
 <img src="./public/logo/icon.webp" width="88" height="88" alt="Shirone logo" />

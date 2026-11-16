@@ -48,8 +48,19 @@ function isActive(link: (typeof links)[number]): boolean {
 			href={url("/")}
 			class="group flex h-10 items-center gap-2 px-2 text-[var(--on-surface)] transition whitespace-nowrap"
 		>
-			<span class="h-5 w-1 rounded-full bg-[var(--primary)] transition-all group-hover:h-7"></span>
-			<span class="text-lg font-bold group-hover:text-[var(--primary)]">{siteConfig.title}</span>
+			{siteConfig.topAppBar.icon ? (
+				<img src={url(siteConfig.topAppBar.icon)} alt="" width="28" height="28" class="shrink-0 rounded-full" />
+			) : (
+				<span class="h-5 w-1 shrink-0 rounded-full bg-[var(--primary)] transition-all group-hover:h-7"></span>
+			)}
+			<span class="text-lg font-bold group-hover:text-[var(--primary)]">
+				{siteConfig.topAppBar.title ? (
+					<>
+						<span class="hidden sm:inline">{siteConfig.topAppBar.title}</span>
+						<span class="sm:hidden">{siteConfig.title}</span>
+					</>
+				) : siteConfig.title}
+			</span>
 		</a>
 		<nav class:list={["top-app-bar__nav hidden h-full items-center gap-1 lg:flex", siteConfig.topAppBar.contentAlign === "center" ? "lg:absolute lg:left-1/2 lg:-translate-x-1/2" : "ml-4"]} aria-label={i18n(I18nKey.mainNavigation)}>
 			{links.map((link) => {
